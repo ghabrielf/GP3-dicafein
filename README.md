@@ -795,9 +795,11 @@ value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUxLCJpYXQiOjE2MzMwNTc3
 Path Variables
 key: id
 value: 8
+
 ##### Header
 key: admin_token
 value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQwLCJpYXQiOjE2MzI5Nzc1NzN9.wJzBazCcx-LbMPeSiIaf7x4-i-KyWMV0czizxEcV8_A
+
 
 ##### Respond
 
