@@ -1,7 +1,6 @@
 const handleError = (error , req, res,next) => {
     let statusCode = 500
     let errMessage = "Internal server error"
-    console.log(error)
     
     switch (error.name) {
         case "Error":
@@ -10,13 +9,37 @@ const handleError = (error , req, res,next) => {
         case "SequelizeUniqueConstraintError":
             errMessage = error.message
             break
+        case "Unauthorize":
+            statusCode = 401
+            errMessage = "Unauthorize access"
+            break
+        case "Unauthenticated":
+            statusCode = 401
+            errMessage = error.message || "Unauthenticated"
+            break
+        case "NotFound":
+            statusCode = 404
+            errMessage = "The requested resource was not found"
+            break
+        case "Forbidden":
+            statusCode = 403
+            errMessage = "Access to that resource is forbidden"
+            break
+        case "Validation" :
+            statusCode = 400
+            errMessage = error.message || "Unprocessable Entity"
+            break
+        case "ValidationError":
+            statusCode = error.statusCode
+            errMessage = error.details.body || "Unprocessable Entity"
+            break
         default:
-            errMessage = "Internal Server Error"
+            errMessage = error.message || "Internal Server Error"
     }
-    
+    console.log(error)
     res.status(statusCode).json({
         message: errMessage
     })
 }
 
-module.exports = handleError 
+module.exports = handleError
