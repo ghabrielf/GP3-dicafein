@@ -4,7 +4,10 @@ const Transaction = require('../models').transaction
 class transactionController {
     static getAll = async (req,res,next) => {
         try {
-            const transactions = await Transaction.findAll()
+            const {currentUser} = req
+            const transactions =(currentUser.role === 'member') ?
+                await Transaction.findAll({where: {user_id: currentUser.id}})
+            : await Transaction.findAll()
             res.status(200).json(transactions)
         } catch (error) {
             next(error)
@@ -31,8 +34,9 @@ class transactionController {
             let user = req.currentUser
             let {id} = req.params
             const transaction = await Transaction.findByPk(id)
-            if(user.role === 'user' && transaction.user_id !== user.id) {
-                throw new Error('Forbidden')
+            if(!transaction) return next({name: "NotFound"})
+            if(user.role === 'member' && transaction.user_id !== user.id) {
+                return next({name: "Forbidden"})
             } 
             
             res.status(200).json(transaction)
@@ -48,8 +52,9 @@ class transactionController {
             const { status , payment_money } = req.body
 
             let transaction = await Transaction.findByPk(id)
-            if(user.role === 'user' && transaction.user_id !== user.id) {
-                throw new Error('Forbidden')
+            if(!transaction) return next({name: "NotFound"})
+            if(user.role === 'member' && transaction.user_id !== user.id) {
+                return next({name: "Forbidden"})
             } 
             transaction.update({
                 status, payment_money
@@ -65,14 +70,30 @@ class transactionController {
             let user = req.currentUser
             let {id} = req.params
             let transaction = await Transaction.findByPk(id)
-            console.log(transaction)
-            if(user.role === 'user' && transaction.user_id !== user.id) {
-                throw new Error('Forbidden')
+            
+            if(user.role === 'member' && transaction.user_id !== user.id) {
+                return next({name: "Forbidden"})
             } 
             transaction.destroy()
 
             res.status(200).json({
                 message: "Deleted transaction succesfully"
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static updateStatus = async (req,res,next) => {
+        try {
+            let {id} = req.params
+            let { status } = req.body
+            let transaction = await Transaction.findByPk(id)
+            if(!transaction) return next({name: "NotFound"})
+            transaction.update({status})
+            res.status(200).json({
+                message: "Update status successfully",
+                transaction
             })
         } catch (error) {
             next(error)

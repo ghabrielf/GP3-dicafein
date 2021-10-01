@@ -1,7 +1,7 @@
 'use strict'
 
 const router = require('express').Router()
-const transactionController = require('../controllers/transaction')
+const transactionController = require('../controllers/transaction_')
 const authentication = require('../middlewares/authentication')
 const authorization = require('../middlewares/authorization')
 
