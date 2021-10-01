@@ -1,0 +1,46 @@
+
+#user
+POST:/users/register
+POST:/users/login
+GET:/users
+GET:/users/:id (with condition)
+PUT:/users/:id (with condition)
+DELETE:/users/:id
+
+
+#menus (fathya)
+GET:/menus (all users)
+POST:/menus
+GET:/menus/:id (all users)
+PUT:/menus/:id
+DELETE:/menus/:id
+
+
+#transaction (latif)
+GET:/transactions (users with condition)
+POST:/transactions
+GET:/transactions/:id (users with condition)
+PUT:/transactions/:id
+PATCH:/transactions/:id/status
+DELETE:/transactions/:id
+
+#table (ghabriel)
+GET:/tables (users)
+POST:/tables
+GET:/tables/:id (users)
+PUT:/tables/:id
+PATCH:/tables/:id/status
+DELETE:/tables/:id
+
+
+#booking
+GET:/bookings (users with condition)
+POST:/bookings (users)
+GET:/bookings/:id (users with condition)
+PUT:/bookings/:id (users with condition)
+PATCH:/bookings/:id (users with condition)
+DELETE:/bookings/:id(users with condition)
+
+#transaction_menu
+POST:/transaction_menu (users)
+DELETE:/transaction_menu/:id (users)
