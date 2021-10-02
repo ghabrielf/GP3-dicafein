@@ -10,15 +10,17 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      this.hasMany(models.booking, {foreignKey: "table_id"})
       // define association here
     }
   };
   Table.init({
-    table_number: DataTypes.INTEGER,
+    chalk_board: DataTypes.INTEGER,
     status: DataTypes.ENUM(['fill' , 'empty'])
   }, {
     sequelize,
     modelName: 'Table',
+    tableName: 'cafe_tables',
   });
   return Table;
 };
